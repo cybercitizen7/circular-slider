@@ -1,5 +1,6 @@
 export default class CircularSlider {
-  constructor(options, container) {
+  constructor(options) {
     console.log('Circular Slider Constructor')
+    console.log(options)
   }
 }
