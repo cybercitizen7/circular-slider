@@ -1,0 +1,42 @@
+#gridContainer {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 30% 1fr 1fr 1fr;
+  grid-template-rows: 100px auto;
+  grid-template-areas:
+    'header header header header'
+    'legend main main main'
+    '. button button .';
+}
+
+#titleContainer {
+  background-color: aqua;
+  grid-area: header;
+}
+
+#mainContainer {
+  background-color: blue;
+  grid-area: main;
+}
+
+#legendContainer {
+  background-color: blueviolet;
+  grid-area: legend;
+}
+
+#buttonContainer {
+  background-color: brown;
+  grid-area: button;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: 'create generate';
+}
+
+#btnCreateSlider {
+  grid-area: create;
+}
+
+#btnGenerateRandom {
+  grid-area: generate;
+}
