@@ -1,9 +1,11 @@
+import CircularSlider from './js/Components/CircularSlider.js'
+
 const generateRandomSliders = () => {
   console.log('Generate Random Sliders clicked.')
 }
 
 const createNewSlider = () => {
-  console.log('Create new Slider Clicked')
+  new CircularSlider({}, {})
 }
 
 // Attach Button Event Listeners
