@@ -55,6 +55,7 @@ function generateSliderOptions() {
     minimumValue,
     stepValue,
     radius,
+    sliderName,
   )
 
   // Validate Slider Options

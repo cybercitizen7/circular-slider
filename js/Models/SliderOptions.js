@@ -1,13 +1,14 @@
 import * as StringConstants from '../Constants/StringConstants.js'
 
 export default class SliderOptions {
-  constructor(_container, _color, _maxValue, _minValue, _step, _radius) {
+  constructor(_container, _color, _maxValue, _minValue, _step, _radius, _name) {
     this.container = _container
     this.color = _color
     this.maxValue = _maxValue
     this.minValue = _minValue
     this.step = _step
     this.radius = _radius
+    this.name = _name
   }
 
   validateOptions() {
