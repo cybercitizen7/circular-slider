@@ -1,3 +1,6 @@
+
+[![GitHub Super-Linter](https://github.com/cybercitizen7/circular-slider/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
+
 # Circular Slider
 Coding Challenge for Celtra. Circular Slider is a reusable slider written in pure JavaScript. 
 It supports several configuration options such as:
