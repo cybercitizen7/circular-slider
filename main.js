@@ -6,7 +6,7 @@ import * as StringConstants from './js/Constants/StringConstants.js'
 // Constants
 const MAX_RADIUS = InterfaceUtils.isMobileDevice() ? 100 : 300
 const STEP_RADIUS = InterfaceUtils.isMobileDevice() ? 50 : 100
-const mainContainer = document.getElementById('mainContainer')
+const mainContainer = document.getElementById('main-container')
 
 // Global varaibles
 let nrExistingSliders = 0
@@ -71,8 +71,8 @@ function generateSliderOptions() {
 
 // Attach Button Event Listeners
 document
-  .getElementById('btnCreateSlider')
+  .getElementById('btn-create-slider')
   .addEventListener('click', createNewSlider)
 document
-  .getElementById('btnGenerateRandom')
+  .getElementById('btn-generate-random')
   .addEventListener('click', generateRandomSliders)

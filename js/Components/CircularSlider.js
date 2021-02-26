@@ -29,26 +29,26 @@ export default class CircularSlider {
 
   createLegend() {
     const expenseContainer = document.createElement('div')
-    expenseContainer.classList.add('expenseContainer')
+    expenseContainer.classList.add('expense-container')
 
     const expenseName = document.createElement('p')
-    expenseName.classList.add('mediumText')
-    expenseName.id = 'expenseName'
+    expenseName.classList.add('medium-text')
+    expenseName.id = 'expense-name'
     expenseName.innerHTML = this.sliderName
 
     const expenseBox = document.createElement('div')
     expenseBox.style.backgroundColor = this.sliderColor
-    expenseBox.classList.add('expenseBox')
+    expenseBox.classList.add('expense-box')
 
     const expenseValue = document.createElement('p')
-    expenseValue.classList.add('mediumText')
-    expenseValue.id = 'expenseValue'
+    expenseValue.classList.add('medium-text')
+    expenseValue.id = 'expense-value'
     expenseValue.innerHTML = this.sliderValue + 'EUR'
 
     expenseContainer.appendChild(expenseName)
     expenseContainer.appendChild(expenseBox)
     expenseContainer.appendChild(expenseValue)
 
-    document.getElementById('legendContainer').appendChild(expenseContainer)
+    document.getElementById('legend-container').appendChild(expenseContainer)
   }
 }
