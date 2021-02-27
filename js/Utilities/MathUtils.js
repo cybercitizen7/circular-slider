@@ -1,8 +1,10 @@
 export const getCircumference = (radius) => 2 * Math.PI * radius
-export const getCenterPointsOfSlider = (radius) => ({cx: radius, cy: radius})
-export const polarToCartesian = (centerX, centerY, radius, angleInDegrees) => {
-  const angleInRadians = (angleInDegrees * Math.PI) / 180
-  const x = centerX + radius * Math.cos(angleInRadians)
-  const y = centerY + radius * Math.sin(angleInRadians)
+export const getKnobCenter = (cx, cy, angle, radius) => {
+  const x = cx + Math.cos(angle) * radius
+  const y = cy + Math.sin(angle) * radius
   return {x, y}
+}
+
+export const degreeToRadian = (angleDegrees) => {
+  return angleDegrees * ((2 * Math.PI) / 360)
 }

@@ -2,11 +2,19 @@ import CircularSlider from './js/Components/CircularSlider.js'
 import SliderOptions from './js/Models/SliderOptions.js'
 import * as InterfaceUtils from './js/Utilities/InterfaceUtils.js'
 import * as StringConstants from './js/Constants/StringConstants.js'
+import * as SvgUtils from './js/Utilities/SvgUtils.js'
 
 // Constants
-const MAX_RADIUS = InterfaceUtils.isMobileDevice() ? 100 : 300
-const STEP_RADIUS = InterfaceUtils.isMobileDevice() ? 50 : 100
-const mainContainer = document.getElementById('mainContainer')
+const SVG_HEIGHT = InterfaceUtils.isMobileDevice() ? 250 : 400
+const SVG_WIDTH = InterfaceUtils.isMobileDevice() ? 250 : 400
+const MAX_RADIUS = InterfaceUtils.isMobileDevice() ? 40 : 160
+const STEP_RADIUS = InterfaceUtils.isMobileDevice() ? 30 : 60
+
+// Main Containerrs
+const mainContainer = document.getElementById('main-container')
+const svgContainer = document.getElementById('svg-container')
+svgContainer.setAttribute('width', SVG_WIDTH)
+svgContainer.setAttribute('height', SVG_HEIGHT)
 
 // Global varaibles
 let nrExistingSliders = 0
@@ -14,8 +22,8 @@ let nrExistingSliders = 0
 const isSpaceAvailable = () => {
   return InterfaceUtils.isSpaceAvailable(
     nrExistingSliders,
-    MAX_RADIUS,
     STEP_RADIUS,
+    MAX_RADIUS,
   )
 }
 
@@ -30,7 +38,9 @@ const createNewSlider = () => {
   }
 
   const sliderOptions = generateSliderOptions()
-  new CircularSlider(sliderOptions)
+
+  new CircularSlider(sliderOptions).drawSlider(svgContainer)
+  nrExistingSliders++
 }
 
 function generateSliderOptions() {
@@ -71,8 +81,8 @@ function generateSliderOptions() {
 
 // Attach Button Event Listeners
 document
-  .getElementById('btnCreateSlider')
+  .getElementById('btn-create-slider')
   .addEventListener('click', createNewSlider)
 document
-  .getElementById('btnGenerateRandom')
+  .getElementById('btn-generate-random')
   .addEventListener('click', generateRandomSliders)
