@@ -2,7 +2,6 @@ import CircularSlider from './js/Components/CircularSlider.js'
 import SliderOptions from './js/Models/SliderOptions.js'
 import * as InterfaceUtils from './js/Utilities/InterfaceUtils.js'
 import * as StringConstants from './js/Constants/StringConstants.js'
-import * as SvgUtils from './js/Utilities/SvgUtils.js'
 
 // Constants
 const SVG_HEIGHT = InterfaceUtils.isMobileDevice() ? 400 : 600

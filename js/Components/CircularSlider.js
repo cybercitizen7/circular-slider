@@ -1,7 +1,6 @@
 import KnobModel from '../Models/KnobModel.js'
 
 import * as MathUtils from '../Utilities/MathUtils.js'
-import * as SvgUtils from '../Utilities/SvgUtils.js'
 
 export default class CircularSlider {
   constructor(options) {
