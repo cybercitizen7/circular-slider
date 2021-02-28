@@ -34,11 +34,39 @@
   justify-content: space-evenly;
 }
 
+.button-style {
+  position: relative;
+  display: block;
+  padding: 5px;
+  overflow: hidden;
+  border-width: 0;
+  outline: none;
+  border-radius: 2px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+  background-color: #2ecc71;
+  color: #ecf0f1;
+  transition: background-color 0.3s;
+}
+
+.button-style:disabled {
+  border: 1px solid #999;
+  background-color: #ccc;
+  color: #667;
+}
+
+/* On hover Change Color and Scale up button */
+.button-style:hover:enabled {
+  background-color: #27ae60;
+  transition: all 0.2s ease-in-out;
+  transform: scale(1.1);
+}
+
 /* EXPENSE STYLES */
 .expense-container {
   justify-items: center;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 35px;
   grid-template-areas: 'name expcolor value';
 }
 
@@ -98,6 +126,22 @@
     justify-content: center;
   }
 
+  .expense-container {
+    justify-items: center;
+    display: grid;
+    grid-template-columns: 45% 10% 45%;
+    grid-template-rows: auto;
+    grid-template-areas: 'name expcolor value';
+  }
+
+  #expense-name {
+    font-size: 1.5rem;
+  }
+
+  #expense-value {
+    font-size: 1.5rem;
+  }
+
   #button-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -111,5 +155,9 @@
 
   #btn-generate-random {
     grid-area: generate;
+  }
+
+  .button-style {
+    font-size: 1.3rem;
   }
 }

@@ -24,7 +24,7 @@ export default class CircularSlider {
     this.sliderValue = this.minSliderValue
     this.sliderId = 'slider-' + this.radius
 
-    this.emptySliderColor = '#888888'
+    this.emptySliderColor = '#efefef'
     this.sliderStrokeWidth = 25
 
     this.mouseDown = false
@@ -113,6 +113,8 @@ export default class CircularSlider {
     expenseContainer.appendChild(expenseName)
     expenseContainer.appendChild(expenseBox)
     expenseContainer.appendChild(expenseValue)
+
+    document.getElementById('legend-text').style.display = 'block'
 
     document.getElementById('legend-container').appendChild(expenseContainer)
   }

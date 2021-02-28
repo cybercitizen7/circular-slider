@@ -29,18 +29,55 @@ const isSpaceAvailable = () => {
 
 const generateRandomSliders = () => {
   console.log('Generate Random Sliders clicked.')
+  btnCreateSlider.disabled = true
+  btnGenerateRandom.disabled = true
+
+  const sliderOptions = [
+    new SliderOptions(
+      mainContainer,
+      '#ff62a7',
+      1000,
+      0,
+      10,
+      160,
+      'Traveling',
+      true,
+    ),
+    new SliderOptions(
+      mainContainer,
+      '#ffff01',
+      100,
+      10,
+      20,
+      100,
+      'Electricity',
+      false,
+    ),
+    new SliderOptions(
+      mainContainer,
+      '#008fff',
+      500,
+      0,
+      100,
+      40,
+      'Entertainment',
+      false,
+    ),
+  ]
+
+  sliderOptions.forEach((sliderOption) =>
+    new CircularSlider(sliderOption).drawSlider(svgContainer),
+  )
 }
 
 const createNewSlider = () => {
-  if (!isSpaceAvailable()) {
-    alert(StringConstants.NO_MORE_SPACE_FOR_SLIDERS)
-    return
-  }
+  btnGenerateRandom.disabled = true
 
   const sliderOptions = generateSliderOptions()
 
   new CircularSlider(sliderOptions).drawSlider(svgContainer)
   nrExistingSliders++
+  if (!isSpaceAvailable()) btnCreateSlider.disabled = true
 }
 
 function generateSliderOptions() {
@@ -84,9 +121,7 @@ function generateSliderOptions() {
 }
 
 // Attach Button Event Listeners
-document
-  .getElementById('btn-create-slider')
-  .addEventListener('click', createNewSlider)
-document
-  .getElementById('btn-generate-random')
-  .addEventListener('click', generateRandomSliders)
+const btnCreateSlider = document.getElementById('btn-create-slider')
+btnCreateSlider.addEventListener('click', createNewSlider)
+const btnGenerateRandom = document.getElementById('btn-generate-random')
+btnGenerateRandom.addEventListener('click', generateRandomSliders)
