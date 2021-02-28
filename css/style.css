@@ -2,7 +2,7 @@
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-rows: 50px 1fr 100px 50px;
+  grid-template-rows: 50px 1fr 200px 50px;
   grid-template-areas:
     'header'
     'main'
@@ -12,15 +12,15 @@
 
 #title-container {
   background-color: aqua;
+  display: flex;
+  justify-content: center;
   grid-area: header;
 }
 
 #main-container {
+  display: flex;
+  justify-content: center;
   grid-area: main;
-}
-
-#svg-container {
-  min-width: 100%;
 }
 
 #legend-container {
@@ -29,19 +29,9 @@
 
 /* BUTTON STYLES */
 #button-container {
-  background-color: brown;
   grid-area: button;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-areas: 'create generate';
-}
-
-#btn-create-slider {
-  grid-area: create;
-}
-
-#btn-generate-random {
-  grid-area: generate;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 /* EXPENSE STYLES */
@@ -87,10 +77,10 @@
   /* For Desktop */
   #grid-container {
     grid-template-columns: 30% 1fr 1fr 1fr;
-    grid-template-rows: 100px auto;
+    grid-template-rows: 100px 1fr 80px;
     grid-template-areas:
       'header header header header'
-      'legend main main main'
+      'legend main main .'
       '. button button .';
   }
 
@@ -102,9 +92,24 @@
     font-size: 1.5rem;
   }
 
-  .expense-container {
-    justify-items: start;
-    grid-template-columns: 1fr 1fr 1fr 20% 10% 20%;
-    grid-template-areas: '. . . name expcolor value';
+  #legend-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  #button-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 50px;
+    grid-template-areas: 'create generate';
+  }
+
+  #btn-create-slider {
+    grid-area: create;
+  }
+
+  #btn-generate-random {
+    grid-area: generate;
   }
 }

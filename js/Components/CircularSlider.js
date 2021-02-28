@@ -14,8 +14,10 @@ export default class CircularSlider {
     this.minSliderValue = parseInt(options.minValue)
     this.radius = parseInt(options.radius)
     this.step = parseInt(options.step)
+    this.stepAngle = parseInt(360 / (this.maxSliderValue / this.step))
     this.sliderColor = options.color
     this.sliderName = options.name
+    this.smoothScroll = options.smoothScroll
 
     this.cx = this.sliderSvgWidth / 2
     this.cy = this.sliderSvgHeight / 2
@@ -42,10 +44,11 @@ export default class CircularSlider {
       'transform',
       'rotate(-90,' + this.cx + ',' + this.cy + ')',
     )
-    sliderGroup.setAttribute('rad', this.radius)
-    sliderGroup.setAttribute('maxSliderValue', this.maxSliderValue)
-    sliderGroup.setAttribute('minSliderValue', this.minSliderValue)
-    sliderGroup.setAttribute('sliderStep', this.step)
+    sliderGroup.setAttribute('data-radius', this.radius)
+    sliderGroup.setAttribute('data-maxSliderValue', this.maxSliderValue)
+    sliderGroup.setAttribute('data-minSliderValue', this.minSliderValue)
+    sliderGroup.setAttribute('data-sliderStep', this.step)
+    sliderGroup.setAttribute('data-smoothScroll', this.smoothScroll)
     svg.appendChild(sliderGroup)
 
     // First Draw Empty Slider
@@ -60,6 +63,12 @@ export default class CircularSlider {
   }
 
   drawKnob(svgGroup, angle) {
+    if (!this.smoothScroll) {
+      angle = MathUtils.getSnappyAngleInRadian(
+        MathUtils.radianToDegrees(angle),
+        this.stepAngle,
+      )
+    }
     const knobCenter = MathUtils.getPointOnCircumference(
       this.cx,
       this.cy,
@@ -112,7 +121,12 @@ export default class CircularSlider {
     // Do not search for new Slider if we are performing 'mouseMove'
     if (!this.mouseMove)
       this.activeSliderGroup = this.findClosestSlider(newPoint)
-    const activeSliderRadius = +this.activeSliderGroup.getAttribute('rad')
+
+    this.smoothScroll =
+      this.activeSliderGroup.getAttribute('data-smoothScroll') === 'true'
+    const activeSliderRadius = +this.activeSliderGroup.getAttribute(
+      'data-radius',
+    )
     const currentAngle =
       MathUtils.getAngleOnCircleBetweenPointAndY(newPoint, this.cx, this.cy) *
       0.999
@@ -145,6 +159,14 @@ export default class CircularSlider {
   updateKnob(activeSliderRadius, currentAngle) {
     const knobId = '#knob-' + activeSliderRadius
     const knob = this.activeSliderGroup.querySelector(knobId)
+
+    if (!this.smoothScroll) {
+      currentAngle = MathUtils.getSnappyAngleInRadian(
+        MathUtils.radianToDegrees(currentAngle),
+        this.stepAngle,
+      )
+    }
+
     const knobCenter = MathUtils.getPointOnCircumference(
       this.cx,
       this.cy,
@@ -169,18 +191,25 @@ export default class CircularSlider {
 
     // Get the Max/Min/Step values from Active Slider's Attributes
     const maxSliderValue = parseInt(
-      this.activeSliderGroup.getAttribute('maxSliderValue'),
+      this.activeSliderGroup.getAttribute('data-maxSliderValue'),
     )
     const minSliderValue = parseInt(
-      this.activeSliderGroup.getAttribute('minSliderValue'),
+      this.activeSliderGroup.getAttribute('data-minSliderValue'),
     )
     const sliderStep = parseInt(
-      this.activeSliderGroup.getAttribute('sliderStep'),
+      this.activeSliderGroup.getAttribute('data-sliderStep'),
     )
 
     const currentSliderRange = maxSliderValue - minSliderValue
+    if (!this.smoothScroll) {
+      const currentSteps = Math.ceil(
+        MathUtils.radianToDegrees(currentAngle) / this.stepAngle,
+      )
+      currentAngle = MathUtils.degreeToRadian(currentSteps * this.stepAngle)
+    }
     let currentValue = (currentAngle / (2 * Math.PI)) * currentSliderRange
     const numOfSteps = Math.round(currentValue / sliderStep)
+    // console.log(numOfSteps)
     currentValue = minSliderValue + numOfSteps * sliderStep
     expenseValue.innerHTML = currentValue + ' EUR'
   }
@@ -232,7 +261,7 @@ export default class CircularSlider {
     sliderGroup.appendChild(path)
   }
 
-  generateArcPath(x, y, radius, angle) {
+  generateArcPath(x, y, radius, angleDeg) {
     // https://www.w3.org/TR/SVG/paths.html#PathDataEllipticalArcCommands
     // Parameters for Arc Path:
     //  A rx ry x-axis-rotation large-arc-flag sweep-flag x y
@@ -244,18 +273,24 @@ export default class CircularSlider {
     let arcSweep = 0
     let arcEndX = 0
     let arcEndY = 0
-    let z = false
+    let z = angleDeg === 360
 
-    //  x=cx+rx*cos(theta) and y=cy+ry*sin(theta)
-    // Move to coordinates
-    if (angle === 360) {
-      angle = 359
-      // z-attribute descrives Close Path, which is used when we complete a full circle / path
-      z = true
+    if (!this.smoothScroll) {
+      const angleRadian = MathUtils.getSnappyAngleInRadian(
+        angleDeg,
+        this.stepAngle,
+      )
+      angleDeg = MathUtils.radianToDegrees(angleRadian)
     }
 
-    moveToX = x + radius * Math.cos(MathUtils.degreeToRadian(angle))
-    moveToY = y + radius * Math.sin(MathUtils.degreeToRadian(angle))
+    // if angleDef is 360 (or higher due Snappiness calculation)
+    // we need to adjust it to 359, so we don't just jump over the last angles
+    angleDeg = angleDeg >= 360 ? 359 : angleDeg
+
+    // Move to coordinates
+    //  x=cx+rx*cos(theta) and y=cy+ry*sin(theta)
+    moveToX = x + radius * Math.cos(MathUtils.degreeToRadian(angleDeg))
+    moveToY = y + radius * Math.sin(MathUtils.degreeToRadian(angleDeg))
 
     // We are always drawing our arc from the 0 degree angle
     //  x=cx+rx*cos(theta) and y=cy+ry*sin(theta)
@@ -266,7 +301,7 @@ export default class CircularSlider {
     arcEndY = y
 
     // Arc Sweep determines the positivity of the angle direction (1 is position direction: from start point to end point)
-    arcSweep = angle <= 180 ? '0' : '1'
+    arcSweep = angleDeg <= 180 ? '0' : '1'
 
     let path = {
       M: {
@@ -350,7 +385,7 @@ export default class CircularSlider {
 
     // Get distances from newPoint to each slider
     const distances = sliderGroups.map((slider) => {
-      const radius = parseInt(slider.getAttribute('rad'))
+      const radius = parseInt(slider.getAttribute('data-radius'))
       // Get the absolute value of the distance between newPoint and current Slider
       // newPointDistanceFromCenter - slider Radius gives us this distance
       return Math.abs(newPointDistanceFromCenter - radius)
