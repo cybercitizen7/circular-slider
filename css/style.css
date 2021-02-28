@@ -38,18 +38,20 @@
   position: relative;
   display: block;
   padding: 0;
-
   overflow: hidden;
-
   border-width: 0;
   outline: none;
   border-radius: 2px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
-
   background-color: #2ecc71;
   color: #ecf0f1;
-
   transition: background-color 0.3s;
+}
+
+.button-style:disabled {
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
 }
 
 /* On hover Change Color and Scale up button */
@@ -57,12 +59,6 @@
   background-color: #27ae60;
   transition: all 0.2s ease-in-out;
   transform: scale(1.1);
-}
-
-.button-style:disabled {
-  border: 1px solid #999999;
-  background-color: #cccccc;
-  color: #666666;
 }
 
 /* EXPENSE STYLES */

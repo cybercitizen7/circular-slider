@@ -114,6 +114,8 @@ export default class CircularSlider {
     expenseContainer.appendChild(expenseBox)
     expenseContainer.appendChild(expenseValue)
 
+    document.getElementById('legend-text').style.display = 'block'
+
     document.getElementById('legend-container').appendChild(expenseContainer)
   }
 
