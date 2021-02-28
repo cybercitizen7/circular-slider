@@ -11,6 +11,8 @@ pure JavaScript. It supports several configuration options such as:
 - Radius
 - Container
 
+[Screenshot of the current Demo](screens/circular_slider_demo.png)
+
 # Running the Code
 
 I recommend using VS Code's
