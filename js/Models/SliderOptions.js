@@ -4,10 +4,10 @@ export default class SliderOptions {
   constructor(_container, _color, _maxValue, _minValue, _step, _radius, _name) {
     this.container = _container
     this.color = _color
-    this.maxValue = _maxValue
-    this.minValue = _minValue
-    this.step = _step
-    this.radius = _radius
+    this.maxValue = parseInt(_maxValue)
+    this.minValue = parseInt(_minValue)
+    this.step = parseInt(_step)
+    this.radius = parseInt(_radius)
     this.name = _name
   }
 
