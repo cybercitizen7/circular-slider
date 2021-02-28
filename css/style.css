@@ -53,10 +53,16 @@
 }
 
 /* On hover Change Color and Scale up button */
-.button-style:hover {
+.button-style:hover:enabled {
   background-color: #27ae60;
   transition: all 0.2s ease-in-out;
   transform: scale(1.1);
+}
+
+.button-style:disabled {
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
 }
 
 /* EXPENSE STYLES */
