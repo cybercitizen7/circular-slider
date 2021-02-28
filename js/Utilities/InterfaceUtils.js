@@ -10,18 +10,18 @@ export function getRandomColorForSlider() {
 
   switch (randomNumber) {
     case COLORS.BLUE:
-      return '#0000cc'
+      return '#2196f3'
     case COLORS.GREEN:
-      return '#33cc33'
+      return '#4caf50'
     case COLORS.ORANGE:
-      return '#ff9900'
+      return '#ffa726'
     case COLORS.RED:
-      return '#ff0000'
+      return '#ff5722'
     default:
       console.log(
         'Must have been some error if we come here, but we anyway set some default color.',
       )
-      return '#cc00cc'
+      return '#2196f3'
   }
 }
 

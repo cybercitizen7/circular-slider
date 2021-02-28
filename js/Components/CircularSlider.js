@@ -24,7 +24,7 @@ export default class CircularSlider {
     this.sliderValue = this.minSliderValue
     this.sliderId = 'slider-' + this.radius
 
-    this.emptySliderColor = '#888888'
+    this.emptySliderColor = '#efefef'
     this.sliderStrokeWidth = 25
 
     this.mouseDown = false
