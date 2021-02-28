@@ -261,6 +261,7 @@ export default class CircularSlider {
     path.style.stroke = sliderColor
     path.style.strokeWidth = 25
     path.style.fill = 'none'
+    path.setAttribute('stroke-dasharray', 10 + ' ' + 2)
 
     sliderGroup.appendChild(path)
   }
