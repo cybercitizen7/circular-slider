@@ -5,11 +5,9 @@ import * as SvgUtils from '../Utilities/SvgUtils.js'
 
 export default class CircularSlider {
   constructor(options) {
-    console.log('Circular Slider Constructor')
-    console.log(options)
     this.sliderContainer = options.container
-    this.sliderSvgWidth = 400
-    this.sliderSvgHeight = 400
+    this.sliderSvgWidth = options.container.children[0].clientWidth // Slider SVG is the parent of all 'G'rouped SVG's, so its dimensions are important for centerPoint
+    this.sliderSvgHeight = options.container.children[0].clientHeight
     this.maxSliderValue = parseInt(options.maxValue)
     this.minSliderValue = parseInt(options.minValue)
     this.radius = parseInt(options.radius)

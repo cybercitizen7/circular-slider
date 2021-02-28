@@ -5,10 +5,10 @@ import * as StringConstants from './js/Constants/StringConstants.js'
 import * as SvgUtils from './js/Utilities/SvgUtils.js'
 
 // Constants
-const SVG_HEIGHT = InterfaceUtils.isMobileDevice() ? 400 : 400
-const SVG_WIDTH = InterfaceUtils.isMobileDevice() ? 400 : 400
-const MAX_RADIUS = InterfaceUtils.isMobileDevice() ? 160 : 160
-const STEP_RADIUS = InterfaceUtils.isMobileDevice() ? 60 : 60
+const SVG_HEIGHT = InterfaceUtils.isMobileDevice() ? 400 : 600
+const SVG_WIDTH = InterfaceUtils.isMobileDevice() ? 400 : 600
+const MAX_RADIUS = InterfaceUtils.isMobileDevice() ? 160 : 240
+const STEP_RADIUS = InterfaceUtils.isMobileDevice() ? 60 : 90
 
 // Main Containerrs
 const mainContainer = document.getElementById('main-container')
@@ -39,7 +39,7 @@ const generateRandomSliders = () => {
       1000,
       0,
       10,
-      160,
+      InterfaceUtils.isMobileDevice() ? 160 : 240,
       'Traveling',
       true,
     ),
@@ -49,7 +49,7 @@ const generateRandomSliders = () => {
       100,
       10,
       20,
-      100,
+      InterfaceUtils.isMobileDevice() ? 100 : 150,
       'Electricity',
       false,
     ),
@@ -59,7 +59,7 @@ const generateRandomSliders = () => {
       500,
       0,
       100,
-      40,
+      InterfaceUtils.isMobileDevice() ? 40 : 60,
       'Entertainment',
       false,
     ),
