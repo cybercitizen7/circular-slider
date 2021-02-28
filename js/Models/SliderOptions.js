@@ -1,7 +1,16 @@
 import * as StringConstants from '../Constants/StringConstants.js'
 
 export default class SliderOptions {
-  constructor(_container, _color, _maxValue, _minValue, _step, _radius, _name) {
+  constructor(
+    _container,
+    _color,
+    _maxValue,
+    _minValue,
+    _step,
+    _radius,
+    _name,
+    _smoothScroll,
+  ) {
     this.container = _container
     this.color = _color
     this.maxValue = parseInt(_maxValue)
@@ -9,6 +18,7 @@ export default class SliderOptions {
     this.step = parseInt(_step)
     this.radius = parseInt(_radius)
     this.name = _name
+    this.smoothScroll = _smoothScroll
   }
 
   validateOptions() {

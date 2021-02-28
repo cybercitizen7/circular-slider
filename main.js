@@ -5,16 +5,16 @@ import * as StringConstants from './js/Constants/StringConstants.js'
 import * as SvgUtils from './js/Utilities/SvgUtils.js'
 
 // Constants
-const SVG_HEIGHT = InterfaceUtils.isMobileDevice() ? 250 : 400
-const SVG_WIDTH = InterfaceUtils.isMobileDevice() ? 250 : 400
-const MAX_RADIUS = InterfaceUtils.isMobileDevice() ? 40 : 160
-const STEP_RADIUS = InterfaceUtils.isMobileDevice() ? 30 : 60
+const SVG_HEIGHT = InterfaceUtils.isMobileDevice() ? 400 : 400
+const SVG_WIDTH = InterfaceUtils.isMobileDevice() ? 400 : 400
+const MAX_RADIUS = InterfaceUtils.isMobileDevice() ? 160 : 160
+const STEP_RADIUS = InterfaceUtils.isMobileDevice() ? 60 : 60
 
 // Main Containerrs
 const mainContainer = document.getElementById('main-container')
 const svgContainer = document.getElementById('svg-container')
-svgContainer.setAttribute('width', SVG_WIDTH)
-svgContainer.setAttribute('height', SVG_HEIGHT)
+svgContainer.style.width = SVG_WIDTH
+svgContainer.style.height = SVG_HEIGHT
 
 // Global varaibles
 let nrExistingSliders = 0
@@ -49,6 +49,9 @@ function generateSliderOptions() {
   const minimumValue = prompt('Please enter starting value for Slider', 0)
   const maximumValue = prompt('Please enter maximum value for Slider', 100)
   const stepValue = prompt('Please enter Step value for Slider', 10)
+  let smoothScroll = prompt('Do you want to use smooth scrolling? [Y/n]', 'Y')
+  if (smoothScroll === 'Y') smoothScroll = true
+  else smoothScroll = false
 
   const radius = InterfaceUtils.getSliderRadius(
     nrExistingSliders,
@@ -66,6 +69,7 @@ function generateSliderOptions() {
     stepValue,
     radius,
     sliderName,
+    smoothScroll,
   )
 
   // Validate Slider Options
