@@ -201,16 +201,20 @@ export default class CircularSlider {
     )
 
     const currentSliderRange = maxSliderValue - minSliderValue
+
     if (!this.smoothScroll) {
       const currentSteps = Math.ceil(
         MathUtils.radianToDegrees(currentAngle) / this.stepAngle,
       )
       currentAngle = MathUtils.degreeToRadian(currentSteps * this.stepAngle)
     }
+
     let currentValue = (currentAngle / (2 * Math.PI)) * currentSliderRange
     const numOfSteps = Math.round(currentValue / sliderStep)
-    // console.log(numOfSteps)
     currentValue = minSliderValue + numOfSteps * sliderStep
+
+    if (currentValue >= maxSliderValue) currentValue = maxSliderValue
+
     expenseValue.innerHTML = currentValue + ' EUR'
   }
 
