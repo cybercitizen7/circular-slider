@@ -5,10 +5,10 @@ import * as StringConstants from './js/Constants/StringConstants.js'
 import * as SvgUtils from './js/Utilities/SvgUtils.js'
 
 // Constants
-const SVG_HEIGHT = InterfaceUtils.isMobileDevice() ? 400 : 400
-const SVG_WIDTH = InterfaceUtils.isMobileDevice() ? 400 : 400
-const MAX_RADIUS = InterfaceUtils.isMobileDevice() ? 160 : 160
-const STEP_RADIUS = InterfaceUtils.isMobileDevice() ? 60 : 60
+const SVG_HEIGHT = InterfaceUtils.isMobileDevice() ? 400 : 600
+const SVG_WIDTH = InterfaceUtils.isMobileDevice() ? 400 : 600
+const MAX_RADIUS = InterfaceUtils.isMobileDevice() ? 160 : 240
+const STEP_RADIUS = InterfaceUtils.isMobileDevice() ? 60 : 90
 
 // Main Containerrs
 const mainContainer = document.getElementById('main-container')
@@ -29,18 +29,55 @@ const isSpaceAvailable = () => {
 
 const generateRandomSliders = () => {
   console.log('Generate Random Sliders clicked.')
+  btnCreateSlider.disabled = true
+  btnGenerateRandom.disabled = true
+
+  const sliderOptions = [
+    new SliderOptions(
+      mainContainer,
+      '#ff62a7',
+      1000,
+      0,
+      10,
+      InterfaceUtils.isMobileDevice() ? 160 : 240,
+      'Traveling',
+      true,
+    ),
+    new SliderOptions(
+      mainContainer,
+      '#ffff01',
+      100,
+      10,
+      20,
+      InterfaceUtils.isMobileDevice() ? 100 : 150,
+      'Electricity',
+      false,
+    ),
+    new SliderOptions(
+      mainContainer,
+      '#008fff',
+      500,
+      0,
+      100,
+      InterfaceUtils.isMobileDevice() ? 40 : 60,
+      'Entertainment',
+      false,
+    ),
+  ]
+
+  sliderOptions.forEach((sliderOption) =>
+    new CircularSlider(sliderOption).drawSlider(svgContainer),
+  )
 }
 
 const createNewSlider = () => {
-  if (!isSpaceAvailable()) {
-    alert(StringConstants.NO_MORE_SPACE_FOR_SLIDERS)
-    return
-  }
+  btnGenerateRandom.disabled = true
 
   const sliderOptions = generateSliderOptions()
 
   new CircularSlider(sliderOptions).drawSlider(svgContainer)
   nrExistingSliders++
+  if (!isSpaceAvailable()) btnCreateSlider.disabled = true
 }
 
 function generateSliderOptions() {
@@ -84,9 +121,7 @@ function generateSliderOptions() {
 }
 
 // Attach Button Event Listeners
-document
-  .getElementById('btn-create-slider')
-  .addEventListener('click', createNewSlider)
-document
-  .getElementById('btn-generate-random')
-  .addEventListener('click', generateRandomSliders)
+const btnCreateSlider = document.getElementById('btn-create-slider')
+btnCreateSlider.addEventListener('click', createNewSlider)
+const btnGenerateRandom = document.getElementById('btn-generate-random')
+btnGenerateRandom.addEventListener('click', generateRandomSliders)

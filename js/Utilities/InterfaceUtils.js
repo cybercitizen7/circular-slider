@@ -1,27 +1,27 @@
 export function getRandomColorForSlider() {
   const COLORS = {
-    BLUE: 0, // #0000cc
-    GREEN: 1, // #33cc33
-    ORANGE: 2, // #ff9900'
-    RED: 3, // #ff0000
+    CELTRA_BLUE: 0, // #008fff
+    CELTRA_GREEN: 1, // #0dff73
+    CELTRA_YELLOW: 2, // #ffff07
+    CELTRA_PINK: 3, // #ff62a7
   }
   // Generate random number between 0 and 3
   let randomNumber = Math.floor(Math.random() * 4)
 
   switch (randomNumber) {
-    case COLORS.BLUE:
-      return '#0000cc'
-    case COLORS.GREEN:
-      return '#33cc33'
-    case COLORS.ORANGE:
-      return '#ff9900'
-    case COLORS.RED:
-      return '#ff0000'
+    case COLORS.CELTRA_BLUE:
+      return '#008fff'
+    case COLORS.CELTRA_GREEN:
+      return '#0dff73'
+    case COLORS.CELTRA_YELLOW:
+      return '#ffff07'
+    case COLORS.CELTRA_PINK:
+      return '#ff62a7'
     default:
       console.log(
         'Must have been some error if we come here, but we anyway set some default color.',
       )
-      return '#cc00cc'
+      return '#2196f3'
   }
 }
 
