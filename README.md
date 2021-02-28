@@ -11,7 +11,7 @@ pure JavaScript. It supports several configuration options such as:
 - Radius
 - Container
 
-[Screenshot of the current Demo](screens/circular_slider_demo.png)
+![Screenshot of current release](https://i.ibb.co/vHh5bzd/circular-slider-demo.png)
 
 # Running the Code
 
