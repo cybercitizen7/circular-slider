@@ -32,8 +32,14 @@ export const getAngleOnCircleBetweenPointAndY = (newPoint, cx, cy) => {
   return radian360
 }
 
-export const getSnappyAngleInRadian = (angleDeg, stepAngle) => {
+export const getCurrentStep = (angleDeg, stepAngleDeg) =>
+  Math.ceil(angleDeg / stepAngleDeg)
+
+export const getCurrentStepAngleDeg = (currentStep, currentStepAngleDeg) =>
+  currentStep * currentStepAngleDeg
+
+export const getSnappyAngleInDegrees = (angleDeg, stepAngle) => {
   const currentSteps = Math.ceil(angleDeg / stepAngle)
   const currentStepAngle = currentSteps * stepAngle
-  return degreeToRadian(currentStepAngle)
+  return currentStepAngle
 }

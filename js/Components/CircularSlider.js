@@ -23,6 +23,7 @@ export default class CircularSlider {
 
     this.emptySliderColor = '#efefef'
     this.sliderStrokeWidth = 25
+    this.snapTreshold = 0.1
 
     this.mouseDown = false
     this.mouseMove = false
@@ -60,12 +61,6 @@ export default class CircularSlider {
   }
 
   drawKnob(svgGroup, angle) {
-    if (!this.smoothScroll) {
-      angle = MathUtils.getSnappyAngleInRadian(
-        MathUtils.radianToDegrees(angle),
-        this.stepAngle,
-      )
-    }
     const knobCenter = MathUtils.getPointOnCircumference(
       this.cx,
       this.cy,
@@ -126,27 +121,27 @@ export default class CircularSlider {
     const activeSliderRadius = +this.activeSliderGroup.getAttribute(
       'data-radius',
     )
-    const currentAngle =
+    const currentAngleRadian =
       MathUtils.getAngleOnCircleBetweenPointAndY(newPoint, this.cx, this.cy) *
       0.999
 
     // update Slider
-    this.updateSlider(activeSliderRadius, currentAngle)
+    this.updateSlider(activeSliderRadius, currentAngleRadian)
 
     // update Knob
-    this.updateKnob(activeSliderRadius, currentAngle)
+    this.updateKnob(activeSliderRadius, currentAngleRadian)
 
     // update Legend
-    this.updateLegend(activeSliderRadius, currentAngle)
+    this.updateLegend(activeSliderRadius, currentAngleRadian)
   }
 
-  updateSlider(activeSliderRadius, currentAngle) {
+  updateSlider(activeSliderRadius, currentAngleRadian) {
     const activePath = this.activeSliderGroup.querySelector('#active')
     const arcPath = this.generateArcPath(
       this.cx,
       this.cy,
       activeSliderRadius,
-      MathUtils.radianToDegrees(currentAngle),
+      MathUtils.radianToDegrees(currentAngleRadian),
     )
 
     activePath.setAttribute(
@@ -155,28 +150,34 @@ export default class CircularSlider {
     )
   }
 
-  updateKnob(activeSliderRadius, currentAngle) {
+  updateKnob(activeSliderRadius, currentAngleRadian) {
     const knobId = '#knob-' + activeSliderRadius
     const knob = this.activeSliderGroup.querySelector(knobId)
 
     if (!this.smoothScroll) {
-      currentAngle = MathUtils.getSnappyAngleInRadian(
-        MathUtils.radianToDegrees(currentAngle),
+      const currentAngleDeg = MathUtils.radianToDegrees(currentAngleRadian)
+
+      const nextAngleDeg = MathUtils.getSnappyAngleInDegrees(
+        currentAngleDeg,
         this.stepAngle,
       )
+
+      if (this.shouldSkip(nextAngleDeg, currentAngleDeg)) {
+        currentAngleRadian = MathUtils.degreeToRadian(nextAngleDeg)
+      }
     }
 
     const knobCenter = MathUtils.getPointOnCircumference(
       this.cx,
       this.cy,
-      currentAngle,
+      currentAngleRadian,
       activeSliderRadius,
     )
     knob.setAttribute('cx', knobCenter.x)
     knob.setAttribute('cy', knobCenter.y)
   }
 
-  updateLegend(activeSliderRadius, currentAngle) {
+  updateLegend(activeSliderRadius, currentAngleRadian) {
     const expenseContainer = document.querySelector(
       '#expense-container-' + activeSliderRadius,
     )
@@ -201,14 +202,20 @@ export default class CircularSlider {
 
     const currentSliderRange = maxSliderValue - minSliderValue
 
+    let currentAngleDeg = MathUtils.radianToDegrees(currentAngleRadian)
+
     if (!this.smoothScroll) {
-      const currentSteps = Math.ceil(
-        MathUtils.radianToDegrees(currentAngle) / this.stepAngle,
+      const nextAngleDeg = MathUtils.getSnappyAngleInDegrees(
+        currentAngleDeg,
+        this.stepAngle,
       )
-      currentAngle = MathUtils.degreeToRadian(currentSteps * this.stepAngle)
+
+      if (this.shouldSkip(nextAngleDeg, currentAngleDeg)) {
+        currentAngleDeg = nextAngleDeg
+      }
     }
 
-    let currentValue = (currentAngle / (2 * Math.PI)) * currentSliderRange
+    let currentValue = (currentAngleDeg / 360) * currentSliderRange
     const numOfSteps = Math.round(currentValue / sliderStep)
     currentValue = minSliderValue + numOfSteps * sliderStep
 
@@ -242,13 +249,13 @@ export default class CircularSlider {
     window.addEventListener('touchend', this.mouseTouchEnd.bind(this), false)
   }
 
-  drawArcPath(sliderColor, currentAngle, type, sliderGroup) {
+  drawArcPath(sliderColor, currentAngleDeg, type, sliderGroup) {
     const pathId = type === 'active' ? 'active' : 'inactive'
     const arcPath = this.generateArcPath(
       this.cx,
       this.cy,
       this.radius,
-      currentAngle,
+      currentAngleDeg,
     )
 
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path')
@@ -280,11 +287,14 @@ export default class CircularSlider {
     let z = angleDeg === 360
 
     if (!this.smoothScroll) {
-      const angleRadian = MathUtils.getSnappyAngleInRadian(
+      const nextAngleDeg = MathUtils.getSnappyAngleInDegrees(
         angleDeg,
         this.stepAngle,
       )
-      angleDeg = MathUtils.radianToDegrees(angleRadian)
+
+      if (this.shouldSkip(nextAngleDeg, angleDeg)) {
+        angleDeg = nextAngleDeg
+      }
     }
 
     // if angleDef is 360 (or higher due Snappiness calculation)
@@ -400,5 +410,18 @@ export default class CircularSlider {
     // newPoint and slider
     const closestSliderIndex = distances.indexOf(Math.min(...distances))
     return sliderGroups[closestSliderIndex]
+  }
+
+  shouldSkip(nextAngleDeg, currentAngleDeg) {
+    const currentSteps = MathUtils.getCurrentStep(
+      currentAngleDeg,
+      this.stepAngle,
+    )
+    const prevStepAngle = MathUtils.getCurrentStepAngleDeg(
+      currentSteps - 1,
+      this.stepAngle,
+    )
+    // Skip only when the currentAngle reaches the Treshold value for snapping
+    return currentAngleDeg >= nextAngleDeg * this.snapTreshold + prevStepAngle
   }
 }
