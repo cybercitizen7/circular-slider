@@ -1,5 +1,3 @@
-import KnobModel from '../Models/KnobModel.js'
-
 import * as MathUtils from '../Utilities/MathUtils.js'
 
 export default class CircularSlider {
@@ -76,14 +74,11 @@ export default class CircularSlider {
     knob.setAttribute('cx', knobCenter.x)
     knob.setAttribute('cy', knobCenter.y)
     knob.setAttribute('r', this.sliderStrokeWidth / 2)
-    knob.style.stroke = KnobModel.strokeColor
-    knob.style.strokeWidth = KnobModel.strokeWidth
-    knob.style.fill = KnobModel.fillColor
+    knob.classList.add('knob')
     svgGroup.appendChild(knob)
   }
 
   createLegend() {
-    console.log('Creating Legend')
     const expenseContainer = document.createElement('div')
     expenseContainer.classList.add('expense-container')
     expenseContainer.id = 'expense-container-' + this.radius

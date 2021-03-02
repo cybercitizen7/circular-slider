@@ -27,7 +27,6 @@ const isSpaceAvailable = () => {
 }
 
 const generateRandomSliders = () => {
-  console.log('Generate Random Sliders clicked.')
   btnCreateSlider.disabled = true
   btnGenerateRandom.disabled = true
 
