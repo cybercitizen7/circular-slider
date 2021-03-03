@@ -2,7 +2,7 @@
 
 # Circular Slider
 
-Coding Challenge for Celtra. Circular Slider is a reusable slider written in
+Circular Slider is a reusable slider written in
 pure JavaScript. It supports several configuration options such as:
 
 - Slider Color
