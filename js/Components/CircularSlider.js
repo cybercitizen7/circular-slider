@@ -180,11 +180,9 @@ export default class CircularSlider {
     )
 
     // Get the Active slider's expenseValue element from the Container
-    const expenseValue = Array.from(expenseContainer.children).filter(
-      (element) => {
-        return element.id === 'expense-value'
-      },
-    )[0]
+    const expenseValue = expenseContainer.querySelector(
+      '.expense-grid__item-value',
+    )
 
     // Get the Max/Min/Step values from Active Slider's Attributes
     const maxSliderValue = parseInt(
@@ -218,7 +216,7 @@ export default class CircularSlider {
 
     if (currentValue >= maxSliderValue) currentValue = maxSliderValue
 
-    expenseValue.innerHTML = currentValue + ' EUR'
+    expenseValue.textContent = currentValue + ' EUR'
   }
 
   attachEventListeners(sliderContainer) {
