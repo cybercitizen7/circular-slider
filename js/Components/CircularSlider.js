@@ -80,20 +80,22 @@ export default class CircularSlider {
 
   createLegend() {
     const expenseContainer = document.createElement('div')
-    expenseContainer.classList.add('expense-container')
+    expenseContainer.classList.add('expense-grid')
     expenseContainer.id = 'expense-container-' + this.radius
 
     const expenseName = document.createElement('p')
-    expenseName.classList.add('medium-text')
+    expenseName.classList.add('expense-grid__item-name')
+    expenseName.classList.add('expense-grid__item-name--medium-text')
     expenseName.id = 'expense-name'
     expenseName.innerHTML = this.sliderName
 
     const expenseBox = document.createElement('div')
     expenseBox.style.backgroundColor = this.sliderColor
-    expenseBox.classList.add('expense-box')
+    expenseBox.classList.add('expense-grid__item-box')
 
     const expenseValue = document.createElement('p')
-    expenseValue.classList.add('medium-text')
+    expenseValue.classList.add('expense-grid__item-value')
+    expenseValue.classList.add('expense-grid__item-value--medium-text')
     expenseValue.id = 'expense-value'
     expenseValue.innerHTML = this.sliderValue + ' EUR'
 
@@ -101,9 +103,9 @@ export default class CircularSlider {
     expenseContainer.appendChild(expenseBox)
     expenseContainer.appendChild(expenseValue)
 
-    document.getElementById('legend-text').style.display = 'block'
+    document.querySelector('.legend__text').style.display = 'block'
 
-    document.getElementById('legend-container').appendChild(expenseContainer)
+    document.querySelector('.legend').appendChild(expenseContainer)
   }
 
   updateUI(newPoint) {
@@ -358,7 +360,7 @@ export default class CircularSlider {
 
   getRelativeMouseOrTouchCoordinates(e) {
     const containerRect = document
-      .querySelector('#svg-container')
+      .querySelector('.main__svg')
       .getBoundingClientRect()
     let x, y, clientPosX, clientPosY
 
@@ -388,7 +390,7 @@ export default class CircularSlider {
       newPoint.x - this.cx,
       newPoint.y - this.cy,
     )
-    const container = document.querySelector('#svg-container')
+    const container = document.querySelector('.main__svg')
     // Get all the sliders that we currently have on Canvas
     const sliderGroups = Array.from(container.querySelectorAll('g'))
 

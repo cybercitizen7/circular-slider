@@ -1,4 +1,4 @@
-#grid-container {
+.grid {
   width: 100%;
   height: 100%;
   display: grid;
@@ -10,31 +10,33 @@
     'button';
 }
 
-#title-container {
+.grid__item-text {
   background-color: aqua;
   display: flex;
   justify-content: center;
   grid-area: header;
 }
 
-#main-container {
+.grid__item-text--big {
+  text-align: center;
+  font-family: sans-serif;
+  font-size: 1.2rem;
+}
+
+.main {
   display: flex;
   justify-content: center;
   grid-area: main;
 }
 
-#legend-container {
-  grid-area: legend;
-}
-
 /* BUTTON STYLES */
-#button-container {
+.btn {
   grid-area: button;
   display: flex;
   justify-content: space-evenly;
 }
 
-.button-style {
+.btn__create {
   position: relative;
   display: block;
   padding: 5px;
@@ -48,21 +50,24 @@
   transition: background-color 0.3s;
 }
 
-.button-style:disabled {
+.btn__create:disabled {
   border: 1px solid #999;
   background-color: #ccc;
   color: #667;
 }
 
 /* On hover Change Color and Scale up button */
-.button-style:hover:enabled {
+.btn__create:hover:enabled {
   background-color: #27ae60;
   transition: all 0.2s ease-in-out;
   transform: scale(1.1);
 }
 
-/* EXPENSE STYLES */
-.expense-container {
+/* LEGEND & EXPENSE STYLES */
+.legend {
+  grid-area: legend;
+}
+.expense-grid {
   background-color: #eceff1;
   justify-items: center;
   display: grid;
@@ -71,35 +76,26 @@
   grid-template-areas: 'name expcolor value';
 }
 
-#expense-name {
-  font-size: 0.9rem;
-  text-align: start;
+.expense-grid__item-name {
   grid-area: name;
 }
 
-.expense-box {
+.expense-grid__item-name--medium-text,
+.expense-grid__item-value--medium-text {
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1rem;
+}
+
+.expense-grid__item-value {
+  grid-area: value;
+}
+
+.expense-grid__item-box {
   width: 20px;
   height: 20px;
   margin: auto;
   grid-area: expcolor;
-}
-
-#expense-value {
-  font-size: 0.9rem;
-  grid-area: value;
-}
-
-/* TEXT CLASSES */
-.big-text {
-  text-align: center;
-  font-family: sans-serif;
-  font-size: 1.2rem;
-}
-
-.medium-text {
-  text-align: center;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 1rem;
 }
 
 /* KNOB STYLES */
@@ -111,7 +107,7 @@
 
 @media screen and (min-width: 768px) {
   /* For Desktop */
-  #grid-container {
+  .grid {
     grid-template-columns: 30% 1fr 1fr 1fr;
     grid-template-rows: 100px 1fr 80px;
     grid-template-areas:
@@ -120,21 +116,22 @@
       '. button button .';
   }
 
-  .big-text {
+  .grid__item-text--big {
     font-size: 2.5rem;
   }
 
-  .medium-text {
+  .expense-grid__item-value--medium-text,
+  .expense-grid__item-name--medium-text {
     font-size: 2rem;
   }
 
-  #legend-container {
+  .legend {
     display: flex;
     flex-direction: column;
     justify-content: center;
   }
 
-  .expense-container {
+  .expense-grid {
     justify-items: center;
     display: grid;
     grid-template-columns: 45% 10% 45%;
@@ -142,30 +139,27 @@
     grid-template-areas: 'name expcolor value';
   }
 
-  #expense-name {
+  .expense-grid__item-name,
+  .expense-grid__itrem-value {
     font-size: 1.5rem;
   }
 
-  #expense-value {
-    font-size: 1.5rem;
-  }
-
-  #button-container {
+  .btn {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 50px;
     grid-template-areas: 'create generate';
   }
 
-  #btn-create-slider {
+  .btn--custom {
     grid-area: create;
   }
 
-  #btn-generate-random {
+  .btn--random {
     grid-area: generate;
   }
 
-  .button-style {
+  .btn__create {
     font-size: 1.3rem;
   }
 }
