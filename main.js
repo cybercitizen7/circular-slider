@@ -10,8 +10,8 @@ const MAX_RADIUS = InterfaceUtils.isMobileDevice() ? 160 : 240
 const STEP_RADIUS = InterfaceUtils.isMobileDevice() ? 60 : 90
 
 // Main Containerrs
-const mainContainer = document.getElementById('main-container')
-const svgContainer = document.getElementById('svg-container')
+const mainContainer = document.querySelector('.main')
+const svgContainer = document.querySelector('.main__svg')
 svgContainer.style.width = SVG_WIDTH
 svgContainer.style.height = SVG_HEIGHT
 
@@ -119,7 +119,7 @@ function generateSliderOptions() {
 }
 
 // Attach Button Event Listeners
-const btnCreateSlider = document.getElementById('btn-create-slider')
+const btnCreateSlider = document.querySelector('.btn--custom')
 btnCreateSlider.addEventListener('click', createNewSlider)
-const btnGenerateRandom = document.getElementById('btn-generate-random')
+const btnGenerateRandom = document.querySelector('.btn--random')
 btnGenerateRandom.addEventListener('click', generateRandomSliders)
